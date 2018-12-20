@@ -1,6 +1,7 @@
 package org.jimweaver.notekeeper
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
@@ -25,10 +26,20 @@ class NoteRecyclerAdapter(val context: Context, val notes : List<NoteInfo>) : Ad
         val note : NoteInfo = notes[position]
         holder.courseTitle.text = note.course?.title
         holder.noteTitle.text = note.title
+        holder.currentPosition = position
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var currentPosition : Int = 0
         var courseTitle : TextView = itemView.findViewById(R.id.text_course_title)
         var noteTitle : TextView = itemView.findViewById(R.id.text_note_title)
+
+        init {
+            itemView.setOnClickListener {
+                val intent = Intent(context, MainActivity::class.java)
+                intent.putExtra(NOTE_POSITION, currentPosition)
+                context.startActivity(intent)
+            }
+        }
     }
 }

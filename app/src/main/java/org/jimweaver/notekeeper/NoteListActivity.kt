@@ -2,6 +2,7 @@ package org.jimweaver.notekeeper
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,6 +10,12 @@ import android.support.v7.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_note_list.*
 
 class NoteListActivity : AppCompatActivity() {
+
+    var adapter : NoteRecyclerAdapter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +40,14 @@ class NoteListActivity : AppCompatActivity() {
     private fun initializeDisplayContent() {
         val recyclerNotes : RecyclerView = findViewById(R.id.list_notes)
         recyclerNotes.layoutManager = LinearLayoutManager(this)
-        recyclerNotes.adapter = NoteRecyclerAdapter(this, DataManager.notes)
+        adapter =  NoteRecyclerAdapter(this, DataManager.notes)
+        recyclerNotes.adapter = adapter
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        (listNotes.adapter as ArrayAdapter<NoteInfo>).notifyDataSetChanged()
-//    }
+    override fun onResume() {
+        super.onResume()
+        adapter?.notifyDataSetChanged()
+    }
 
 
 
