@@ -5,13 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.ArrayAdapter
-import kotlinx.android.synthetic.*
 
 import kotlinx.android.synthetic.main.activity_note_list.*
-import kotlinx.android.synthetic.main.content_note_list.*
-
-// test comit
 
 class NoteListActivity : AppCompatActivity() {
 
@@ -37,8 +32,8 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun initializeDisplayContent() {
         val recyclerNotes : RecyclerView = findViewById(R.id.list_notes)
-        val notesLayoutManager : LinearLayoutManager = LinearLayoutManager(this)
-        recyclerNotes.layoutManager = notesLayoutManager
+        recyclerNotes.layoutManager = LinearLayoutManager(this)
+        recyclerNotes.adapter = NoteRecyclerAdapter(this, DataManager.notes)
     }
 
 //    override fun onResume() {
